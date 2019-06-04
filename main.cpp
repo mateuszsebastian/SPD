@@ -1,111 +1,82 @@
+#include "Zadanie.h"
 #include <iostream>
-#include <cstdlib>
 #include <fstream>
-#include <cstring>
 #include <iomanip>
-#include <algorithm>
-
 
 using namespace std;
 
-int cmax(int **t, int zad, int masz);
-void permutacja(int **t, int zad, int masz);
-void wypisz(int **t, int zad, int masz);
-
 int main()
 {
-    ifstream plik;
-    int zadanie, maszyna;
+   string nazwa_pliku;
+   ifstream plik;
+   int zadania, a, b, c, Cmax, zad;
 
-    plik.open("ta000.txt");
+   vector <Zadanie> tab;
+   vector <Zadanie> pi;
+   Zadanie test,test2;
+
+   cout << "Podaj nazwe pliku" << endl;
+   cin >> nazwa_pliku;
+
+    plik.open(nazwa_pliku);
     if(plik.is_open())
-        plik >> zadanie >> maszyna;
-    cout <<"Ilosc zadan = " << zadanie << " " <<"Ilosc maszyn = " << maszyna << endl;
+    plik >> zadania;
+    cout <<"Ilosc zadan = " << zadania << endl;
     cout << endl;
 
-   // alokacja tablicy dwuwymiarowej
 
-    int **tab = new int *[zadanie];
-    for(int i = 0; i < zadanie; i++)
-        tab[i] = new int [maszyna];
-
-   // wpisanie wartosci z pliku
-
-    for(int i = 0; i < zadanie; i++)
+    for (int i = 0; i < zadania; i++)
     {
-        for(int j = 0; j < maszyna; j++)
-            plik >> tab[i][j];
-    }
+            plik >> a >> b >> c;
+            zad = i + 1;
+            test.czytaj(a,b,c,zad);
+           // test.nr_zad = i + 1;
+            tab.push_back(test);
 
-    permutacja(tab, zadanie - 1, maszyna - 1);
-
-    delete[] tab;
-
-    return 0;
-}
-
-
- int cmax(int **t, int zad, int masz)
-{
-    int czas_max;
-
-    if (zad == -1 || masz == -1)
-        return czas_max=0;
-    else
-        return czas_max = max(cmax(t, zad - 1, masz), cmax(t,zad,masz - 1 )) + t[zad][masz];
-
-}
-
-
-void wypisz(int **t, int zad, int masz)
-{
-    static int licz = 1;
-
-     for(int i = 0; i < zad; i++)
-    {
-        for(int j = 0; j < masz; j++)
-        {
-            cout << setw(4) << t[i][j] << " ";
-        }
-            cout << endl;
     }
 
 
-    int c = cmax(t,zad - 1,masz - 1);
-    cout << "Czas przegladu zupelnego = " << c << endl;
-    cout << licz << endl ;
-    licz++;
+   // for (int i = 0; i < zadania; i++)
+   //     cout << tab[i].r << " " << tab[i].p << " " << tab[i].q << " " << tab[i].nr_zad << endl;
 
 
-}
+     /*  pi = test.Sharge(tab,tab.size());
 
-void permutacja(int **t, int zad, int masz)
-{
-    int z = sizeof(zad);
-    int m = sizeof(masz);
+       for (unsigned int i = 0; i < pi.size(); i++)
+        cout << pi[i].nr_zad << " ";
 
-    if(zad == - 1)
-        {
-            wypisz(t,z,m - 1);
-            cout << endl;
 
-        }
-        else
-        {
-            permutacja(t, zad - 1 , masz);
-            for(int i = 0; i < zad; i++)
-                {
-                    if(i == masz)
-                    swap(t[zad][masz], t[zad - 1][masz]);
-                    else
-                    {
-                        for(int i = 0; i < m ; i++)
-                        {
-                            swap(t[zad][i], t[zad - 1][i]);
-                        }
-                    }
-                        permutacja(t, zad - 1 , masz);
-                }
-            }
-            return;
+       Cmax = test.cmax(pi, pi.size());
+       cout << "\n" << Cmax << endl;
+
+*/
+
+        Cmax = test.Schrage_pmtm(tab,tab.size());
+        cout << "#################################\n\tCMAX z przerwaniami\n\t" << Cmax << endl;
+
+
+        /*Cmax = test.maksimum(tab,tab.size());
+        cout << Cmax << endl;
+
+        test2.czytaj(tab[Cmax].r, tab[Cmax].p, tab[Cmax].q, tab[Cmax].nr_zad);
+
+        cout << test2.r << " " << test2.p << " " << test2.q << endl;
+
+
+
+        tab.erase(tab.begin() + Cmax);
+
+         for (int i = 0; i < tab.size(); i++)
+             cout << tab[i].r << " " << tab[i].p << " " << tab[i].q << " " << tab[i].nr_zad << endl;
+
+*/
+
+
+
+
+
+
+
+
+return 0;
 }
